@@ -1,12 +1,8 @@
 <?php
-echo "MySQL server name:";
-$servername = fgets(STDIN);
-echo "MySQL username:";
-$username = fgets(STDIN);
-echo "MySQL password:";
-$password = fgets(STDIN);
-echo "Flarum database:";
-$dbname = fgets(STDIN);
+$servername = 'localhost';
+$username = 'root';
+$password = '';
+$dbname = 'forum';
 
 // MySQL connection
 $conn = new mysqli($servername, $username, $password, $dbname);

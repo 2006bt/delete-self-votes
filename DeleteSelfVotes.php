@@ -17,6 +17,7 @@ echo "Connected to MySQL";
 $post_votes = $conn->query("SELECT id, post_id, user_id FROM post_votes");
 $posts = $conn->query("SELECT id, user_id FROM posts");
 $data_posts = $posts -> fetch_assoc();
+var_dump($data_posts);
 
 // Process data
 $ids_to_delete = array();

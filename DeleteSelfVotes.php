@@ -17,16 +17,15 @@ echo "Connected to MySQL";
 $post_votes = $conn->query("SELECT id, post_id, user_id FROM post_votes");
 $posts = $conn->query("SELECT id, user_id FROM posts");
 $data_posts = $posts -> fetch_assoc();
-var_dump($data_posts);
 
 // Process data
 $ids_to_delete = array();
 while($data_post_votes = $post_votes->fetch_assoc()){
     $uid = $data_post_votes["user_id"];
-    echo array_search($uid, array_column($data_posts, 'user_id'));
-    if($uid == array_search($uid, array_column($data_posts, 'user_id'))){
+    var_dump(array_column($data_posts, 'user_id'));
+    /*if($uid == array_search($uid, array_column($data_posts, 'user_id'))){
         $ids_to_delete[] =  $data_post_votes["id"];
-    }
+    }*/
 }
 
 // Show result

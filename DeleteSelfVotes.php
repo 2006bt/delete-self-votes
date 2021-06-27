@@ -22,7 +22,8 @@ $data_posts = $posts -> fetch_assoc();
 $ids_to_delete = array();
 while($data_post_votes = $post_votes->fetch_assoc()){
     $uid = $data_post_votes["user_id"];
-    if($uid == array_search($uid, array_column($data_posts, 'user_id'))["user_id"]){
+    print array_search($uid, array_column($data_posts, 'user_id'))["user_id"];
+    if($uid == array_search($uid, array_column($data_posts, 'user_id'))){
         $ids_to_delete[] =  $data_post_votes["id"];
     }
 }

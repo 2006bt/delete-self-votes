@@ -31,7 +31,11 @@ while($row = $post_votes->fetch_assoc()){
 
 // Show result
 var_dump($ids_to_delete);
-echo "We will delete these.";
+echo "We will delete these.\n";
+foreach($ids_to_delete as $value){
+    $conn->query("DELETE FROM post_votes WHERE id=" . $value);
+}
+echo "Complete.";
 
 
 

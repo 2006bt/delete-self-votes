@@ -24,17 +24,13 @@ while($row = $posts->fetch_assoc()){
 // Process data
 $ids_to_delete = array();
 while($row = $post_votes->fetch_assoc()){
-    if($conn->query("SELECT user_id FROM posts WHERE id=".$row["post_id"]) == $row["user_id"]){
+    if($conn->query("SELECT user_id FROM posts WHERE id=".$row["post_id"])->fetch_assoc()["user_id"] == $row["user_id"]){
         $ids_to_delete[] =  $row["id"];
     }
 }
 
 // Show result
-while($row = $post_votes->fetch_assoc()){
-    if(in_array($row["id"], $ids_to_delete)){
-        echo "ID" . $row["id"] . "user_id" . $row["user_id"] . "\n";
-    }
-}
+var_dump($ids_to_delete);
 echo "We will delete these.";
 
 

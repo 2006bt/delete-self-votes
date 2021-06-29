@@ -38,27 +38,27 @@ echo "Complete deleting votes. Now updating user votes. \n";
 
 // 修改user votes
 $now_votes=$conn->query("SELECT user_id, value FROM post_votes");
-$new_user_votes=array(
-    "id"=>array(),
-    "votes"=>array()
-);
+//$new_user_votes=array(array(),array());
 while($row = $now_votes->fetch_assoc()){
-    $ids=array();
-    foreach($new_user_votes as $i){
-        $ids[]=$i;
-    }
-    if(in_array($row["user_id"],$ids))){ //假如数组中已存在此用户
-        foreach($new_user_votes as $i){ //修改数组
-            if($i["id"] == $row["id"]){
-                if($row["value"] == 1){
-                    $i["votes"]++;
-                }else{
-                    $i["votes"]--;
+    if(isset($new_user_votes)){
+        if(in_array($row["user_id"],array_column($new_user_votes,0))){ //假如数组中已存在此用户
+            foreach($new_user_votes as $i){ //修改数组
+                if($i[0] == $row["id"]){
+                    if($row["value"] == 1){
+                        $i[1]++;
+                    }else{
+                        $i[1]--;
+                    }
                 }
             }
+        }else{ //如果不存在，则创建
+            $new_user_votes[]=array($row["user_id"],$row["value"]);
         }
-    }else{ //如果不存在，则创建
-        $new_user_votes[]=array($row["user_id"],$row["value"]);
+    }else{
+        $new_user_votes=array(
+            array($row["user_id"]),
+            array($row["value"])
+        );
     }
 }
 var_dump($new_user_votes);

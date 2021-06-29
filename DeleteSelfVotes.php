@@ -43,7 +43,11 @@ $new_user_votes=array(
     "votes"=>array()
 );
 while($row = $now_votes->fetch_assoc()){
-    if(in_array($row["user_id"],array_column($new_user_votes,"id"))){ //假如数组中已存在此用户
+    $ids=array();
+    foreach($new_user_votes as $i){
+        $ids[]=$i;
+    }
+    if(in_array($row["user_id"],$ids))){ //假如数组中已存在此用户
         foreach($new_user_votes as $i){ //修改数组
             if($i["id"] == $row["id"]){
                 if($row["value"] == 1){

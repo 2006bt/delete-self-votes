@@ -36,12 +36,12 @@ echo "We will delete these.\n";
 }*/
 echo "Complete deleting votes. Now updating user votes. ";
 
-$data_users=$conn->query("SELECT id FROM users")->fetch_assoc();
-while($row = $data_users->fetch_assoc()){
+$users=$conn->query("SELECT id FROM users");
+while($row = $users->fetch_assoc()){
     echo $row."\n";
 }
 
-$data_now_votes=$conn->query("SELECT id, value FROM post_votes")->fetch_assoc();
-while($row = $data_now_votes){
+$now_votes=$conn->query("SELECT id, value FROM post_votes");
+while($row = $now_votes){
     echo $row."\n";
 }

@@ -28,16 +28,20 @@ while($row = $post_votes->fetch_assoc()){
         $ids_to_delete[] =  $row["id"];
     }
 }
-
-// Show result
+/*
 var_dump($ids_to_delete);
 echo "We will delete these.\n";
 foreach($ids_to_delete as $value){
     $conn->query("DELETE FROM post_votes WHERE id=" . $value);
 }
-echo "Complete.";
+echo "Complete deleting votes. Now updating user votes. ";*/
 
-
-
-
-
+$users=array();
+while($row = $conn->query("SELECT id FROM users")->fetch_assoc()){
+    $users[]=$row;
+}
+var_dump($users);
+$now_votes=array(array());
+while($row = $conn->query("SELECT id, value FROM post_votes")->fetch_assoc()){
+    $now_votes[]=$row;
+}

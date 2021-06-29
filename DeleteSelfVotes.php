@@ -42,22 +42,30 @@ $now_votes=$conn->query("SELECT user_id, value FROM post_votes");
 while($row = $now_votes->fetch_assoc()){
     if(isset($new_user_votes)){
         if(in_array($row["user_id"],array_column($new_user_votes,0))){ //假如数组中已存在此用户
-            foreach($new_user_votes as $i){ //修改数组
-                if($i[0] == $row["id"]){
+            for ($i = 0; $i < count($new_user_votes); ++ $i) { //修改数组 new
                     if($row["value"] == 1){
-                        $i[1]++;
+                        $new_user_votes[$i]["votes"]++;
                     }else{
-                        $i[1]--;
+                        $new_user_votes[$i]["votes"]--;
                     }
                 }
             }
+            /*foreach($new_user_votes as $i){ //修改数组
+                if($i["id"] == $row["user_id"]){
+                    if($row["value"] == 1){
+                        $i["votes"]++;
+                    }else{
+                        $i["votes"]--;
+                    }
+                }
+            }*/
         }else{ //如果不存在，则创建
             $new_user_votes[]=array($row["user_id"],$row["value"]);
         }
     }else{
         $new_user_votes=array(
-            array($row["user_id"]),
-            array($row["value"])
+            array("id"=>$row["user_id"]),
+            array("votes"=>$row["value"])
         );
     }
 }

@@ -1,19 +1,18 @@
 <?php
+// MySQL连接信息
 $servername = 'localhost';
 $username = 'root';
 $password = '';
 $dbname = 'forum';
 
-// MySQL connection
+// 连接并检测MySQL
 $conn = new mysqli($servername, $username, $password, $dbname);
-
-// Detect connections
 if ($conn->connect_error) {
     die("Failed to connect MySQL: " . $conn->connect_error);
 }
-echo "Connected to MySQL";
+echo "Connected to MySQL\n";
 
-// Query origin data
+// 查询原始数据
 $post_votes = $conn->query("SELECT id, post_id, user_id FROM post_votes");
 $posts = $conn->query("SELECT id, user_id FROM posts");
 $data_posts=array(array());
@@ -31,11 +30,12 @@ while($row = $post_votes->fetch_assoc()){
 
 var_dump($ids_to_delete);
 echo "We will delete these.\n";
-/*foreach($ids_to_delete as $value){
+foreach($ids_to_delete as $value){
     $conn->query("DELETE FROM post_votes WHERE id=" . $value);
-}*/
-echo "Complete deleting votes. Now updating user votes. ";
+}
+echo "Complete deleting votes. Now updating user votes. \n";
 
+// 修改user votes
 $now_votes=$conn->query("SELECT user_id, value FROM post_votes");
 $new_user_votes=array(
     "id"=>array(),
@@ -56,3 +56,4 @@ while($row = $now_votes->fetch_assoc()){
         $new_user_votes[]=array($row["user_id","value"]);
     }
 }
+var_dump($new_user_votes);

@@ -21,6 +21,7 @@ while($row = $posts->fetch_assoc()){
 }
 
 // 处理数据
+/*
 $ids_to_delete = array();
 while($row = $post_votes->fetch_assoc()){
     if($conn->query("SELECT user_id FROM posts WHERE id=".$row["post_id"])->fetch_assoc()["user_id"] == $row["user_id"]){
@@ -32,7 +33,7 @@ var_dump($ids_to_delete);
 echo "We will delete these.\n";
 foreach($ids_to_delete as $value){
     $conn->query("DELETE FROM post_votes WHERE id=" . $value);
-}
+}*/
 echo "Complete deleting votes. Now updating user votes. \n";
 
 // 修改user votes
@@ -42,7 +43,7 @@ $new_user_votes=array(
     "votes"=>array()
 );
 while($row = $now_votes->fetch_assoc()){
-    if(in_array($row["id"],array_column($new_user_votes,"user_id"))){ //假如数组中已存在此用户
+    if(in_array($row["user_id"],array_column($new_user_votes,"id"))){ //假如数组中已存在此用户
         foreach($new_user_votes as $i){ //修改数组
             if($i["id"] == $row["id"]){
                 if($row["value"] == 1){
@@ -53,7 +54,7 @@ while($row = $now_votes->fetch_assoc()){
             }
         }
     }else{ //如果不存在，则创建
-        $new_user_votes[]=array($row["user_id","value"]);
+        $new_user_votes[]=array($row["user_id"],$row["value"]);
     }
 }
 var_dump($new_user_votes);

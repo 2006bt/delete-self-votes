@@ -34,11 +34,15 @@ foreach($ids_to_delete as $value){
     $post_id=$conn->query("SELECT post_id FROM post_votes where id=" . $value)->fetch_assoc()["post_id"];
     echo "post_id=" . $post_id . "\n";
     $user_id=$conn->query("SELECT user_id FROM posts WHERE id=" . $post_id)->fetch_assoc()["user_id"];
-    echo "user_id="$user_id . "\n";
-    $votes=$conn->query("SELECT votes FROM users WHERE id=" . $user_id)->fetch_assoc()["votes"];
-    echo "votes="$votes . "\n-----\n";
-    //$conn->query("UPDATE users SET votes=" . $votes--);
-    //$conn->query("DELETE FROM post_votes WHERE id=" . $value);
+    echo "user_id=" . $user_id . "\n";
+    if($conn->query("SELECT votes FROM users WHERE id=" . $user_id)->fetch_assoc()!=null){
+        $votes=$conn->query("SELECT votes FROM users WHERE id=" . $user_id)->fetch_assoc()["votes"];
+        echo "votes=" . $votes . "\n-----\n";
+        $conn->query("UPDATE users SET votes=" . $votes-- . " WHERE id=" . $user_id);
+    }
+}
+foreach($ids_to_delete as $value){
+    $conn->query("DELETE FROM post_votes WHERE id=" . $value);
 }
 echo "Complete. \n";
 

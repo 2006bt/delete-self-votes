@@ -43,13 +43,13 @@ while($row = $now_votes->fetch_assoc()){
     if(isset($new_user_votes)){
         if(in_array($row["user_id"],array_column($new_user_votes,"id"))){ //假如数组中已存在此用户
             if($row["value"] == 1){
-                for ($i = 0; $i < count($new_user_votes); ++ $i) { //修改数组 new
+                for ($i = 0; $i < count(array_column($new_user_votes,"id")); ++ $i) { //修改数组 new
                     if($new_user_votes[$i]["id"]==$row["user_id"]){
                         $new_user_votes[$i]["votes"]++;
                     }
                 }
             }else{
-                for ($i = 0; $i < count($new_user_votes); ++ $i) { //修改数组 new
+                for ($i = 0; $i < count(array_column($new_user_votes,"id")); ++ $i) { //修改数组 new
                     if($new_user_votes[$i]["id"]==$row["user_id"]){
                         $new_user_votes[$i]["votes"]--;
                     }
@@ -66,14 +66,14 @@ while($row = $now_votes->fetch_assoc()){
             }*/
         }else{ //如果不存在，则创建
             $new_user_votes[]=array(
-                "id"=>$row["user_id"],
-                "votes"=>$row["value"]
+                "id"=>(int)$row["user_id"],
+                "votes"=>(int)$row["value"]
             );
         }
     }else{
         $new_user_votes=array(
-            array("id"=>$row["user_id"]),
-            array("votes"=>$row["value"])
+            array("id"=>(int)$row["user_id"]),
+            array("votes"=>(int)$row["value"])
         );
     }
 }
